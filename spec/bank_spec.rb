@@ -1,7 +1,6 @@
 require "bank"
 
 describe Bank, "#method" do
- 
   bank = Bank.new
   
   context "Respond to methods and object" do
@@ -28,25 +27,37 @@ describe Bank, "#method" do
     end 
 
   end
-  
+
+	context "Expect menu to respond to user input" do
+		  
+			let(:user_input) { ["2\n", "exit\n"] }
+			let(:expected_output) { "You have 0 pounds in your account" }
+	
+			it "output user balance of zero" do
+				set_user_input_and_check_expected_output
+			end
+		end
+
+
 	context "Account balance to be expected on account set up" do
 
 		it "Account balance is zero when show account" do
-			expect { bank.show }.to output("Balance: 0\n").to_stdout
+			expect { bank.show }.to output("You have 0 pounds in your account\n").to_stdout
 			expect(bank.instance_variable_get(:@bank)).to eq(0)
 		end
+
 		it "Account deposit 2 pounds" do
-			expect { bank.deposit }.to output("You have 2 pounds on you account\n").to_stdout
+			expect { bank.deposit }.to output("You have 2 pounds in your account\n").to_stdout
 			xpect(bank.instance_variable_get(:@bank)).to eq(2)
 		end
 
 		it "Account withdraw 2 pounds" do
-			expect { bank.withdraw }.to output("You have 0 pounds on you account\n").to_stdout
+			expect { bank.withdraw }.to output("You have 0 pounds in your account\n").to_stdout
 			xpect(bank.instance_variable_get(:@bank)).to eq(0)
 		end
 
 		it "Account show 2 pounds" do
-			expect { bank.show }.to output("You have 0 pounds on you account\n").to_stdout
+			expect { bank.show }.to output("You have 0 pounds in your account\n").to_stdout
 		end
 
 	end
@@ -66,7 +77,7 @@ describe Bank, "#variable" do
 		end
 		
 		it "Account show 12 pounds" do
-			expect { bank.show }.to output("You have 12 pounds on you account\n").to_stdout
+			expect { bank.show }.to output("You have 12 pounds in your account\n").to_stdout
 		end
 
   end
@@ -80,17 +91,17 @@ describe Bank, "#functionality" do
   context "Expect bank function correctly" do
 	
 		it "Account deposit 2 pounds" do
-			expect { bank.deposit }.to output("You have 2 pounds on you account\n").to_stdout
+			expect { bank.deposit }.to output("You have 2 pounds in your account\n").to_stdout
 			expect(bank.instance_variable_get(:@bank)).to eq(2)
 		end
 
 		it "Account withdraw 2 pounds" do
-			expect { bank.withdraw }.to output("You have 0 pounds on you account\n").to_stdout
+			expect { bank.withdraw }.to output("You have 0 pounds in your account\n").to_stdout
 			expect(bank.instance_variable_get(:@bank)).to eq(0)
 		end
 
 		it "Account show 2 pounds" do
-			expect { bank.show }.to output("You have 0 pounds on you account\n").to_stdout
+			expect { bank.show }.to output("You have 0 pounds in your account\n").to_stdout
 		end
 
 		it "Account show 2 pounds" do
@@ -101,3 +112,9 @@ describe Bank, "#functionality" do
 
 end
 
+
+def set_user_input_and_check_expected_output
+	allow_any_instance_of(Object).to receive(:gets).and_return(*user_input)
+
+	expect { load "lib/bank.rb" }.to output(/#{expected_output}/m).to_stdout
+end
