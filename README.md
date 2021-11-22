@@ -16,3 +16,10 @@
  - Amount stored on the account 
  - Transactions to be recorded every time operation is made
 
+## Step 2 - Object Bank
+
+### Project creation with user interface (extra)
+
+- class creation
+- methods and variables
+- menu with user interface (extra)

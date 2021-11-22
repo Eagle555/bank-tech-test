@@ -20,7 +20,7 @@ describe Bank, "#method" do
     end 
     
     it "Check if deposit exist" do
-        expect(bank).to respond_to(:add)
+        expect(bank).to respond_to(:deposit)
     end 
     
     it "Check if withdraw exist" do
