@@ -30,17 +30,37 @@ class Bank
     end
   end
 
-  def deposit
+  def deposit(*amount)
+    puts "How much would like to deposit"
+    amount = gets.chomp.to_i
+    @bank += amount
+    history_payin(amount)
+    puts "You have now #{@bank} pounds in your account"
   end
 
   def withdraw
   end
 
   def history
+    if @history.empty?
+      puts "bank empty" 
+    else
+      @history.each { |transaction| puts "Amount: #{transaction.first}, Date: #{transaction[1]}, Type: #{transaction.last}" }
+    end
   end
 
   def show
     puts "You have #{@bank} pounds in your account"
+  end
+
+  private 
+
+  def history_payin(amount)
+    @history << [amount, Time.now, :deposit]
+  end
+  
+  def history_payout(amount)
+    @history << [amount, Time.now, :withdrawal]
   end
 
 end
