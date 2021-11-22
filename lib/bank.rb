@@ -32,13 +32,22 @@ class Bank
 
   def deposit(*amount)
     puts "How much would like to deposit"
-    amount = gets.chomp.to_i
+    amount.first.nil? ? amount = gets.chomp.to_i : amount = amount.first
     @bank += amount
     history_payin(amount)
     puts "You have now #{@bank} pounds in your account"
   end
 
-  def withdraw
+  def withdraw(*amount)
+    puts "How much would you like to withdraw?"
+    amount.first.nil? ? amount = gets.chomp.to_i : amount = amount.first
+    if amount > @bank
+      puts "No enough pounds. You have only #{@bank}"
+    else
+      @bank -= amount
+      history_payout(amount)
+      puts "You have now #{@bank} pounds in your account"
+    end
   end
 
   def history

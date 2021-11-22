@@ -23,3 +23,5 @@
 - class creation
 - methods and variables
 - menu with user interface (extra)
+- implementation of a choice to use user interface
+- implementing functionality to pass the test
