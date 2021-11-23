@@ -9,7 +9,7 @@
 
 ## How to use
 
-### For user intrerface 
+### For user interface 
 ```
 ruby app.rb
 ```
@@ -47,8 +47,8 @@ irb -r ./lib/bank.rb
 
 ### Separating objects
 
-- history as seprate object
-- balance as seprate object
+- history as separate object
+- balance as separate object
 - transaction verification
 
 ### User interface

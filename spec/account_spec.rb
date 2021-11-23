@@ -28,7 +28,7 @@ describe Account, "test deposit, withdrawal and verification" do
   end
 
   context "Expect account to prevent fraud" do
-    it "Account prevent withdrawal when whithdrawal larger then the balance" do
+    it "Account prevent withdrawal when amount larger then the balance" do
       expect { account.pay_out(20) }.to output( include("Transaction unsuccessful") ).to_stdout
 			expect { account.transactions }.to output( include("withdrawal - operation cancelled") ).to_stdout
     end

@@ -6,31 +6,31 @@ describe Bank, "test user interface and functionality" do
   
   context "Respond to methods and object" do
     it "Creates new Bank object" do
-        expect(bank).to be_instance_of Bank
+      expect(bank).to be_instance_of Bank
     end
     
     it "Check if menu exist" do
-        expect(bank).to respond_to(:menu)
+      expect(bank).to respond_to(:menu)
     end 
 
 	it "Check if action exist" do
-        expect(bank).to respond_to(:action)
+      expect(bank).to respond_to(:action)
     end 
     
     it "Check if show account exist" do
-        expect(bank).to respond_to(:show)
+      expect(bank).to respond_to(:show)
     end 
     
     it "Check if deposit exist" do
-        expect(bank).to respond_to(:deposit)
+      expect(bank).to respond_to(:deposit)
     end 
     
     it "Check if withdraw exist" do
-        expect(bank).to respond_to(:withdraw)
+      expect(bank).to respond_to(:withdraw)
     end 
 
 	it "Check if statement exist" do
-        expect(bank).to respond_to(:statement)
+      expect(bank).to respond_to(:statement)
     end 
 
   end
@@ -136,7 +136,7 @@ describe Bank, "test user interface and functionality" do
 			"Enter 3 - withdraw",
 			"Enter 4 - show transactions",
 			"Write 'exit' to exit"].join("\n.*") }
-      let(:expected_output) { [
+    let(:expected_output) { [
 			"Current balance: 15.0 pounds",
       "Enter 1 - deposit",
 			"Enter 2 - show balance",
