@@ -1,19 +1,21 @@
 require "bank"
 
-describe Bank, "#method" do
+describe Bank, "test user interface and functionality" do
 
   bank = Bank.new
   
   context "Respond to methods and object" do
-
-    it "creates new Bank object" do
+    it "Creates new Bank object" do
         expect(bank).to be_instance_of Bank
     end
     
     it "Check if menu exist" do
         expect(bank).to respond_to(:menu)
     end 
-    
+
+	it "Check if action exist" do
+        expect(bank).to respond_to(:action)
+    end 
     
     it "Check if show account exist" do
         expect(bank).to respond_to(:show)
@@ -27,13 +29,16 @@ describe Bank, "#method" do
         expect(bank).to respond_to(:withdraw)
     end 
 
+	it "Check if statement exist" do
+        expect(bank).to respond_to(:statement)
+    end 
+
   end
 
 	context "Account balance to be expected on account set up" do
 
 		it "Account balance is zero when show account" do
 			expect { bank.show }.to output("You have 0 pounds in your account\n").to_stdout
-			expect(bank.instance_variable_get(:@bank)).to eq(0)
 		end
 
 		let(:user_input) { ["1\n", "12\n", "exit\n"] }
@@ -43,7 +48,12 @@ describe Bank, "#method" do
 			"Enter 4 - show transactions",
 			"Write 'exit' to exit",
 			"How much would like to deposit",
-			"You have now 12 pounds in your account"] }
+			"You have now 12.0 pounds in your account",
+      "Enter 1 - deposit",
+      "Enter 2 - show balance",
+			"Enter 3 - withdraw",
+			"Enter 4 - show transactions",
+			"Write 'exit' to exit"].join("\n.*") }
     
 		it "Account deposit 12 pounds" do
 			set_user_input_and_check_expected_output
@@ -52,6 +62,7 @@ describe Bank, "#method" do
 
 	
   context "Account withdrawal to reduce the amount" do
+
 		let(:user_input) { ["1\n", "12\n", "3\n", "10\n", "exit\n"] }
 		let(:expected_output) { ["Enter 1 - deposit",
 			"Enter 2 - show balance",
@@ -59,14 +70,20 @@ describe Bank, "#method" do
 			"Enter 4 - show transactions",
 			"Write 'exit' to exit",
 			"How much would like to deposit",
-			"You have now 12 pounds in your account",
+			"You have now 12.0 pounds in your account",
 			"Enter 1 - deposit",
 			"Enter 2 - show balance",
 			"Enter 3 - withdraw",
 			"Enter 4 - show transactions",
 			"Write 'exit' to exit",
-			"How much would you like to withdraw?",
-			"You have now 2 pounds in your account"] }
+			"How much would you like to withdraw?"].join("\n.*") }
+    let(:expected_output) { [
+      "You have now 2.0 pounds in your account",
+      "Enter 1 - deposit",
+      "Enter 2 - show balance",
+      "Enter 3 - withdraw",
+      "Enter 4 - show transactions",
+      "Write 'exit' to exit"].join("\n.*") }
 			
 		it "Account withdraw 2 pounds" do
 			set_user_input_and_check_expected_output
@@ -75,63 +92,62 @@ describe Bank, "#method" do
 		it "Account withdraw 2 pounds" do
 			bank.deposit(12)
 			bank.withdraw(10)
-			expect(bank.instance_variable_get(:@bank)).to eq(2)
-		end
-
-		it "Account show 2 pounds" do
 			expect { bank.show }.to output("You have 2 pounds in your account\n").to_stdout
-		end
-
+    end
 	end
-  
-end
 
-describe Bank, "#variable" do
- 
-  bank = Bank.new
-  
-  bank.instance_variable_set(:@bank, 12) 
-  
-	context "Expect account variable to respond to change" do
-
-		it "Account shows 12 when variable set to 12" do
-			expect(bank.instance_variable_get(:@bank)).to eq(12)
+  context "Account to show balance" do
+		let(:user_input) { ["1\n", "15\n", "2\n", "exit\n"] }
+		let(:expected_output) { ["Enter 1 - deposit",
+			"Enter 2 - show balance",
+			"Enter 3 - withdraw",
+			"Enter 4 - show transactions",
+			"Write 'exit' to exit",
+			"How much would like to deposit",
+			"You have now 15.0 pounds in your account",
+			"Enter 1 - deposit",
+			"Enter 2 - show balance",
+			"Enter 3 - withdraw",
+			"Enter 4 - show transactions",
+			"Write 'exit' to exit",
+			"You have 15.0 pounds in your account",
+      "Enter 1 - deposit",
+			"Enter 2 - show balance",
+			"Enter 3 - withdraw",
+			"Enter 4 - show transactions",
+			"Write 'exit' to exit"].join("\n.*") }
+			
+		it "Balance of 15 pounds" do
+			set_user_input_and_check_expected_output
 		end
-		
-		it "Account show 12 pounds" do
-			expect { bank.show }.to output("You have 12 pounds in your account\n").to_stdout
-		end
-
   end
 
-end
-
-describe Bank, "#functionality" do
-
-	bank = Bank.new
-
-  context "Expect bank function correctly" do
-	
-		it "Account deposit 2 pounds" do
-			expect { bank.deposit(2) }.to output(/You have now 2 pounds in your account/m).to_stdout
-			expect(bank.instance_variable_get(:@bank)).to eq(2)
+  context "Account to show statement" do
+		let(:user_input) { ["1\n", "15\n", "4\n", "exit\n"] }
+		let(:expected_output) { ["Enter 1 - deposit",
+			"Enter 2 - show balance",
+			"Enter 3 - withdraw",
+			"Enter 4 - show transactions",
+			"Write 'exit' to exit",
+			"How much would like to deposit",
+			"You have now 15.0 pounds in your account",
+			"Enter 1 - deposit",
+			"Enter 2 - show balance",
+			"Enter 3 - withdraw",
+			"Enter 4 - show transactions",
+			"Write 'exit' to exit"].join("\n.*") }
+      let(:expected_output) { [
+			"Current balance: 15.0 pounds",
+      "Enter 1 - deposit",
+			"Enter 2 - show balance",
+			"Enter 3 - withdraw",
+			"Enter 4 - show transactions",
+			"Write 'exit' to exit"].join("\n.*") }
+			
+		it "Balance of 15 pounds" do
+			set_user_input_and_check_expected_output
 		end
-
-		it "Account withdraw 2 pounds" do
-			expect { bank.withdraw(2) }.to output(/You have now 0 pounds in your account/m).to_stdout
-			expect(bank.instance_variable_get(:@bank)).to eq(0)
-		end
-
-		it "Account show 2 pounds" do
-			expect { bank.show }.to output("You have 0 pounds in your account\n").to_stdout
-		end
-
-		it "Account show 2 pounds" do
-			expect { bank.history }.to output( include("Amount: 2", "Type: deposit", "Type: withdrawal") ).to_stdout
-    end
-
-	end
-
+  end
 end
 
 def set_user_input_and_check_expected_output

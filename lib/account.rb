@@ -17,7 +17,6 @@ class Account
   def pay_in(amount)
     transaction_payin(amount)
     transaction_verification(amount, true)
-    
   end
 
   def pay_out(amount)
@@ -28,7 +27,7 @@ class Account
   private 
 
   def transaction_verification(amount, type)
-    if ledger.last.first == amount
+    if ledger.last.first == amount && amount > 0.01
       balance_verification(amount, type)
     else
       puts "Error: transaction not recorded"
@@ -55,10 +54,18 @@ class Account
 
   def transaction_payin(amount)
     ledger << [amount, Time.now, :deposit]
+    operation_cancellation(amount)
   end
   
   def transaction_payout(amount)
     ledger << [amount, Time.now, :withdrawal]
+    operation_cancellation(amount)
+  end
+
+  def operation_cancellation(amount)
+    unless amount > 0.01 && amount.is_a?(Numeric)
+      ledger.last << "activity reported to bank - operation cancelled" 
+    end
   end
 
   protected 

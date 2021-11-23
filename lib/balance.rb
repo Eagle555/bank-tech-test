@@ -24,8 +24,12 @@ class Balance
   private 
 
   def add_credit(amount)
-    @credit += amount
-    @credit = @credit.round(2)
+    if amount < 1_000_000_000_000
+      @credit += amount
+      @credit = @credit.round(2)
+    else
+      false
+    end
   end
 
   def deduct_credit(amount)

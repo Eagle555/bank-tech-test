@@ -7,6 +7,23 @@
 - Account statement (date, amount, balance) printing.
 - Data can be kept in memory (it doesn't need to be stored to a database or anything).
 
+## How to use
+
+### For user intrerface 
+```
+ruby app.rb
+```
+
+### Running tests
+```
+rspec
+```
+### Running in console
+```
+irb -r ./lib/bank.rb
+```
+
+## Solution approach
 ## Step 1 - Test creation
 
 ### Expectation 
@@ -41,3 +58,17 @@
 ### Functionality
 
 - adding decimal point, for pence processing.
+
+## Step 4 - Test coverage
+
+### Tests
+
+- current failing test
+- coverage
+- retesting
+
+### Security
+
+- negative numbers
+- strings
+- recording malicious activity
