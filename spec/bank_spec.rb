@@ -137,5 +137,5 @@ end
 def set_user_input_and_check_expected_output
 	allow_any_instance_of(Object).to receive(:gets).and_return(*user_input)
 
-	expect { load "lib/bank.rb" }.to output(/#{expected_output}/m).to_stdout
+	expect { Bank.new.menu }.to output(/#{expected_output}/m).to_stdout
 end

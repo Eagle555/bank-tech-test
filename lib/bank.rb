@@ -1,8 +1,6 @@
+require_relative "account"
+   
 class Bank
-  def initialize
-    @bank = 0
-    @history = []
-  end
 
   def menu
     loop do
@@ -26,53 +24,45 @@ class Bank
       when 3
         withdraw
       when 4
-        history
+        statement
     end
   end
 
   def deposit(*amount)
-    puts "How much would like to deposit"
-    amount.first.nil? ? amount = gets.chomp.to_i : amount = amount.first
-    @bank += amount
-    history_payin(amount)
-    puts "You have now #{@bank} pounds in your account"
+    if amount.first.nil? 
+      puts "How much would like to deposit"
+      amount = gets.chomp.to_f 
+    else
+      amount = amount.first
+    end
+    account.pay_in(amount)
   end
 
   def withdraw(*amount)
-    puts "How much would you like to withdraw?"
-    amount.first.nil? ? amount = gets.chomp.to_i : amount = amount.first
-    if amount > @bank
-      puts "No enough pounds. You have only #{@bank}"
+    if amount.first.nil?
+      puts "How much would you like to withdraw?"
+      amount = gets.chomp.to_f
     else
-      @bank -= amount
-      history_payout(amount)
-      puts "You have now #{@bank} pounds in your account"
+      amount = amount.first
     end
-  end
-
-  def history
-    if @history.empty?
-      puts "bank empty" 
-    else
-      @history.each { |transaction| puts "Amount: #{transaction.first}, Date: #{transaction[1]}, Type: #{transaction.last}" }
-    end
+    account.pay_out(amount)
   end
 
   def show
-    puts "You have #{@bank} pounds in your account"
+    puts "You have #{account.current_balance} pounds in your account"
   end
 
-  private 
-
-  def history_payin(amount)
-    @history << [amount, Time.now, :deposit]
+  def statement
+    account.transactions
+    puts "Current balance: #{account.current_balance} pounds"
   end
-  
-  def history_payout(amount)
-    @history << [amount, Time.now, :withdrawal]
+
+  private
+
+  attr_reader :account
+
+  def initialize
+    @account = Account.new
   end
 
 end
-
-my_bank = Bank.new
-my_bank.menu

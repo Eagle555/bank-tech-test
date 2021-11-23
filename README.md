@@ -25,3 +25,19 @@
 - menu with user interface (extra)
 - implementation of a choice to use user interface
 - implementing functionality to pass the test
+
+## Step 3 - Refactoring
+
+### Separating objects
+
+- history as seprate object
+- balance as seprate object
+- transaction verification
+
+### User interface
+
+- app start file
+
+### Functionality
+
+- adding decimal point, for pence processing.
