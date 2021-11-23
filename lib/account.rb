@@ -1,12 +1,15 @@
-require_relative "balance"
+# frozen_string_literal: true
+
+require_relative 'balance'
 
 class Account
-
   def transactions
     if ledger.empty?
-      puts "No transactions yet" 
+      puts 'No transactions yet'
     else
-      ledger.each { |transaction| puts "Amount: #{transaction.first}, Date: #{transaction[1]}, Type: #{transaction.last}" }
+      ledger.each do |transaction|
+        puts "Amount: #{transaction.first}, Date: #{transaction[1]}, Type: #{transaction.last}"
+      end
     end
   end
 
@@ -24,13 +27,13 @@ class Account
     transaction_verification(amount, false)
   end
 
-  private 
+  private
 
   def transaction_verification(amount, type)
     if ledger.last.first == amount && amount > 0.01
       balance_verification(amount, type)
     else
-      puts "Error: transaction not recorded"
+      puts 'Error: transaction not recorded'
     end
   end
 
@@ -40,15 +43,13 @@ class Account
         puts "You have now #{balance.show_balance} pounds in your account"
       else
         puts "Transaction unsuccessful, current balance: #{balance.show_balance} pounds"
-        ledger.last << "deposit - operation cancelled"
+        ledger.last << 'deposit - operation cancelled'
       end
+    elsif balance.deduct_and_verify(amount)
+      puts "You have now #{balance.show_balance} pounds in your account"
     else
-      if balance.deduct_and_verify(amount)
-        puts "You have now #{balance.show_balance} pounds in your account"
-      else
-        puts "Transaction unsuccessful, current balance: #{balance.show_balance} pounds"
-        ledger.last << "withdrawal - operation cancelled"
-      end
+      puts "Transaction unsuccessful, current balance: #{balance.show_balance} pounds"
+      ledger.last << 'withdrawal - operation cancelled'
     end
   end
 
@@ -56,25 +57,22 @@ class Account
     ledger << [amount, Time.now, :deposit]
     operation_cancellation(amount)
   end
-  
+
   def transaction_payout(amount)
     ledger << [amount, Time.now, :withdrawal]
     operation_cancellation(amount)
   end
 
   def operation_cancellation(amount)
-    unless amount > 0.01 && amount.is_a?(Numeric)
-      ledger.last << "activity reported to bank - operation cancelled" 
-    end
+    ledger.last << 'activity reported to bank - operation cancelled' unless amount > 0.01 && amount.is_a?(Numeric)
   end
 
-  protected 
-  attr_reader :ledger
-  attr_reader :balance
+  protected
+
+  attr_reader :ledger, :balance
 
   def initialize
     @balance = Balance.new
     @ledger = []
   end
-
 end

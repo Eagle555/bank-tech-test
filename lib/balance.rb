@@ -1,10 +1,11 @@
-class Balance
+# frozen_string_literal: true
 
+class Balance
   def add_and_verify(amount)
     current_credit = credit
     add_credit(amount)
     compare_credit = credit - amount
-    compare_credit.round(2)  == current_credit ? true : deduct_credit(amount)
+    compare_credit.round(2) == current_credit ? true : deduct_credit(amount)
   end
 
   def deduct_and_verify(amount)
@@ -13,15 +14,15 @@ class Balance
       compare_credit = credit + amount
       compare_credit.round(2) == current_credit ? true : add_credit(amount)
     else
-     false
+      false
     end
   end
 
   def show_balance
     credit
   end
-  
-  private 
+
+  private
 
   def add_credit(amount)
     if amount < 1_000_000_000_000
@@ -40,12 +41,12 @@ class Balance
       false
     end
   end
-  
+
   protected
+
   attr_reader :credit
 
   def initialize
     @credit = 0
   end
-
 end

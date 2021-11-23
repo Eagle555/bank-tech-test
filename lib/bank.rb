@@ -1,37 +1,39 @@
-require_relative "account"
-   
-class Bank
+# frozen_string_literal: true
 
+require_relative 'account'
+
+class Bank
   def menu
     loop do
-      puts "Enter 1 - deposit"
-      puts "Enter 2 - show balance"
-      puts "Enter 3 - withdraw"
-      puts "Enter 4 - show transactions"
+      puts 'Enter 1 - deposit'
+      puts 'Enter 2 - show balance'
+      puts 'Enter 3 - withdraw'
+      puts 'Enter 4 - show transactions'
       puts "Write 'exit' to exit"
       choice = gets.chomp
-      break if choice == "exit"
+      break if choice == 'exit'
+
       action(choice.to_i)
     end
   end
 
   def action(choice)
     case choice
-      when 1
-        deposit
-      when 2
-        show
-      when 3
-        withdraw
-      when 4
-        statement
+    when 1
+      deposit
+    when 2
+      show
+    when 3
+      withdraw
+    when 4
+      statement
     end
   end
 
   def deposit(*amount)
-    if amount.first.nil? 
-      puts "How much would like to deposit"
-      amount = gets.chomp.to_f 
+    if amount.first.nil?
+      puts 'How much would like to deposit'
+      amount = gets.chomp.to_f
     else
       amount = amount.first
     end
@@ -40,7 +42,7 @@ class Bank
 
   def withdraw(*amount)
     if amount.first.nil?
-      puts "How much would you like to withdraw?"
+      puts 'How much would you like to withdraw?'
       amount = gets.chomp.to_f
     else
       amount = amount.first
@@ -64,5 +66,4 @@ class Bank
   def initialize
     @account = Account.new
   end
-
 end
